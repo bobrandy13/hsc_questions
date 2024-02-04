@@ -15,7 +15,17 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import file from "~/server/files";
 import submitForm from "~/server/submitForm";
+
+const MAX_FILE_SIZE = 50000000;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -24,7 +34,8 @@ const formSchema = z.object({
   topic: z.string().min(2, {
     message: "Topic must be at least 2 characters.",
   }),
-  question_url: z.string().url(),
+  question_url: z.instanceof(File),
+
   answer_url: z.string().url(),
 });
 
@@ -39,7 +50,12 @@ export default function ProfileForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const response = await submitForm(values);
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("topic", values.topic);
+    formData.append("question_url", values.question_url);
+    formData.append("answer_url", values.answer_url);
+    const response = await submitForm(formData);
 
     if (!response) {
       alert("message not submitted");
@@ -62,6 +78,7 @@ export default function ProfileForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
+          encType="multipart/form-data"
           className="m-4 w-1/2 space-y-8"
         >
           <FormField
@@ -107,9 +124,11 @@ export default function ProfileForm() {
                 <FormLabel>upload_url</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="shadcn"
-                    {...field}
-                    value={field.value ?? ""}
+                    id="picture"
+                    type="file"
+                    onChange={(e) =>
+                      field.onChange(e.target.files ? e.target.files[0] : null)
+                    }
                   />
                 </FormControl>
                 <FormDescription>THis is the question url</FormDescription>

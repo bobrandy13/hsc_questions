@@ -35,6 +35,8 @@ yarn-error.log*
 .env
 .env*.local
 
+intrepid-pride-385906-1911f6f5be41.json
+
 # vercel
 .vercel
 
