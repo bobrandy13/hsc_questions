@@ -1,5 +1,5 @@
 export const extension_2_maths_topics = [
-  "Complex Numbers",
+  "Complex",
   "Proofs",
   "Calculus",
   "Vectors",

@@ -2,6 +2,7 @@ import { postRouter } from "~/server/api/routers/post";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { topicsRouter } from "./routers/topics";
 import { createQuestoin } from "./routers/createQuestion";
+import { listTopicsRouter } from "./routers/listTopicRouter";
 
 /**
  * This is the primary router for your server.
@@ -11,13 +12,7 @@ import { createQuestoin } from "./routers/createQuestion";
 export const appRouter = createTRPCRouter({
   post: postRouter,
 
-  userList: publicProcedure.query(async () => {
-    console.log("hello");
-
-    return {
-      post: "potato",
-    };
-  }),
+  listTopics: listTopicsRouter,
 
   topics: topicsRouter,
 
