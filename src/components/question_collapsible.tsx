@@ -47,7 +47,7 @@ function Question_collapsible({
         </div>
         <Collapsible>
           <CollapsibleTrigger className="flex w-full justify-center p-2">
-            <div className="flex h-12 w-48 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-white">
+            <div className="flex h-12 w-48 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-black">
               Reveal answer
             </div>
           </CollapsibleTrigger>

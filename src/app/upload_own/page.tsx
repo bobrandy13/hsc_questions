@@ -16,7 +16,6 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import submitForm from "~/server/submitForm";
-import { api } from "~/trpc/server";
 
 const formSchema = z.object({
   title: z.string().min(2, {

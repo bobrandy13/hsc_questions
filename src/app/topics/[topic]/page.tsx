@@ -1,8 +1,7 @@
-import Image from "next/image";
 import { api } from "~/trpc/server";
 import Question_collapsible from "~/components/question_collapsible";
 
-async function Topic({ params }: { params: { topic: string } }) {
+async function Topic() {
   const questions = await api.topics.hello.query();
 
   console.log(questions);
