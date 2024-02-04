@@ -1,5 +1,7 @@
 import { postRouter } from "~/server/api/routers/post";
-import { createTRPCRouter } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { topicsRouter } from "./routers/topics";
+import { createQuestoin } from "./routers/createQuestion";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +10,18 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
+
+  userList: publicProcedure.query(async () => {
+    console.log("hello");
+
+    return {
+      post: "potato",
+    };
+  }),
+
+  topics: topicsRouter,
+
+  post_question: createQuestoin,
 });
 
 // export type definition of API

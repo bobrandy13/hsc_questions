@@ -12,32 +12,42 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import getWindowDimensions from "~/server/windowDimensions";
-import {useState} from "react";
-
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const [windowDimensions, _] = useState(getWindowDimensions());
-  console.log(windowDimensions);
+  const [windowDimensions, setDimensions] = useState<{
+    width: number;
+    height: number;
+  }>();
+  useEffect(() => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, []);
+  if (!windowDimensions) {
+    return <div>loading</div>;
+  }
 
   if (windowDimensions.width < 1024) {
     // render the mobile menu
     return (
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Subjects</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink><p className={"p-2"}>Maths</p></NavigationMenuLink>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-
-    )
-
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Subjects</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <NavigationMenuLink>
+                <p className={"p-2"}>Maths</p>
+              </NavigationMenuLink>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    );
   }
   return (
-    <div className="flex h-16 w-full items-center p-4">
+    <div className="sticky top-0 z-40 flex h-16 w-full items-center bg-white p-4 dark:bg-black">
       <div className="text-3xl font-bold">
         <Link href="/">
           <h1 className="">{`Kevin's insane study app`}</h1>
@@ -60,7 +70,7 @@ export default function Navbar() {
             </Link>
           </NavigationMenuList>
           <NavigationMenuList>
-            <Link href="/docs" legacyBehavior passHref>
+            <Link href="/upload_own" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Upload your own
               </NavigationMenuLink>

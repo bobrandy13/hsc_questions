@@ -1,5 +1,3 @@
-import { useTheme } from "next-themes";
-import { Button } from "~/components/ui/button";
 export default async function Home() {
   return (
     <div className="h-screen w-screen">

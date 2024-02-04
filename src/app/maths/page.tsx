@@ -1,21 +1,24 @@
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 
 const topics = [
-    "Mathematics Advanced", "Mathematics Extension 1", "Mathematics Extension 2"
-]
+  { subject_name: "Maths Extension 2", subject_code: "4U" },
+  { subject_name: "Maths Extension 1", subject_code: "3U" },
+  { subject_name: "Maths Advanced", subject_code: "2U" },
+  { subject_name: "Maths Standard", subject_code: "21" },
+];
 export default function Maths() {
   return (
-    <div className="h-screen w-screen p-10 flex justify-center md:justify-normal">
-        <ul className={"h-screen w-full flex md:flex-row"}>
-            {topics.map((topic, key) =>
-                <Link href={`/maths/${topic}`} key={key}>
-                    <div key={key} className={"w-72 h-72 bg-black text-white m-4 rounded p-2 hover:bg-blue-300"}>
-                        {topic}
-                    </div>
-                </Link>
-            )}
-
-        </ul>
+    <div className="flex h-screen w-screen justify-center p-10 md:justify-normal">
+      <ul className={"flex h-screen w-full md:flex-row"}>
+        {topics.map((topic, key) => (
+          <Link href={`/subjects/${topic.subject_code}`} key={key}>
+            <Button key={key} className={"m-4 h-72 w-72 rounded  p-2 "}>
+              {topic.subject_name}
+            </Button>
+          </Link>
+        ))}
+      </ul>
     </div>
   );
 }
