@@ -35,7 +35,7 @@ function Question_collapsible({
         <CardDescription>{question.topic}</CardDescription>
       </CardContent>
       <CardFooter className="flex flex-col justify-center">
-        <div className="relative flex w-3/4 justify-center p-4">
+        <div className="relative flex w-1/2 justify-center p-4">
           <Image
             src={question.question_url}
             width={0}

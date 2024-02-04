@@ -36,7 +36,7 @@ const formSchema = z.object({
   }),
   question_url: z.instanceof(File),
 
-  answer_url: z.string().url(),
+  answer_url: z.instanceof(File),
 });
 
 export default function ProfileForm() {
@@ -50,6 +50,7 @@ export default function ProfileForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    form.reset();
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("topic", values.topic);
@@ -141,12 +142,14 @@ export default function ProfileForm() {
             name="answer_url"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>answer url</FormLabel>
+                <FormLabel>answer file</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="shadcn"
-                    {...field}
-                    value={field.value ?? ""}
+                    id="answer"
+                    type="file"
+                    onChange={(e) =>
+                      field.onChange(e.target.files ? e.target.files[0] : null)
+                    }
                   />
                 </FormControl>
                 <FormDescription>THis is the answer url</FormDescription>

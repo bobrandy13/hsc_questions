@@ -1,8 +1,8 @@
 import { api } from "~/trpc/server";
 import Question_collapsible from "~/components/question_collapsible";
 
-async function Topic() {
-  const questions = await api.topics.hello.query();
+async function Topic({ params }: { params: { topic: string } }) {
+  const questions = await api.topics.hello.query({ topic: params.topic });
 
   console.log(questions);
 

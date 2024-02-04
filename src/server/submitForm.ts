@@ -2,7 +2,12 @@
 
 import prisma from "~/lib/prisma";
 import { Storage } from "@google-cloud/storage";
-import { upload } from "node_modules/@google-cloud/storage/build/esm/src/resumable-upload";
+
+// functoin to remove all the white spaces from a file name
+const formatFileName = (fileName: string): string => {
+  // Remove all the white spaces from the file name
+  return fileName.replace(/\s/g, "");
+};
 
 const cloudStorage = new Storage({
   keyFilename: `intrepid-pride-385906-1911f6f5be41.json`,
@@ -10,46 +15,51 @@ const cloudStorage = new Storage({
 });
 
 const bucket = cloudStorage.bucket("framingwebsite");
+let q_url = "";
+let a_url = "";
 
 export default async function submitForm(formData: FormData) {
-  console.log(formData.get("question_url"));
+  const question: File | null = formData.get("question_url") as unknown as File;
+  const answer: File | null = formData.get("answer_url") as unknown as File;
+  const title = formData.get("title") as string;
+  const topic = formData.get("topic") as string;
 
-  const file: File | null = formData.get("question_url") as unknown as File;
-
-  if (!file) {
+  if (!question || !answer) {
     return {
       upload: "No file",
     };
   }
 
-  const bytes = await file.arrayBuffer();
+  const bytes = await question.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
-  const blob = bucket.file(file.name);
+  const blob = bucket.file(formatFileName(question.name));
   const blobStream = blob.createWriteStream({ resumable: false });
   blobStream.on("finish", () => {
     // The public URL can be used to directly access the file via HTTP.
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-    console.log("file finished uploading", publicUrl);
+    q_url = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
   });
+
+  const answer_bytes = await answer.arrayBuffer();
+  const answer_buffer = Buffer.from(answer_bytes);
+
+  const answer_blob = bucket.file(formatFileName(answer.name));
+  const answer_blobStream = answer_blob.createWriteStream({ resumable: false });
+  answer_blobStream.on("finish", () => {
+    // The public URL can be used to directly access the file via HTTP.
+    a_url = `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`;
+  });
+
+  answer_blobStream.end(answer_buffer);
 
   blobStream.end(buffer);
 
-  console.log(buffer, blobStream);
-
-  // return prisma.question.create({
-  //   data: {
-  //     title: values.title,
-  //     topic: values.topic,
-  //     question_url: "https://wwww.google.com",
-  //     answer_url: values.answer_url,
-  //   },
-  // });
-
-  return {
-    title: "Hello",
-    topic: "World",
-    question_url: "https://www.google.com",
-    answer_url: "https://www.google.com",
-  };
+  return prisma.question.create({
+    data: {
+      title: title,
+      topic: topic,
+      question_url: `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`,
+      answer_url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
+    },
+  });
 }
