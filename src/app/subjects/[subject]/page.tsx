@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "~/components/ui/button";
+import normaliseURL from "~/server/normaliseURL";
 import { api } from "~/trpc/server";
 
 export default async function Page({
@@ -23,7 +24,9 @@ export default async function Page({
         <div key={key}>
           <Button>
             <Link
-              href={`/subjects/${params.subject}/topics/${topic.toLowerCase()}`}
+              href={normaliseURL(
+                `/subjects/${params.subject}/topics/${topic.toLowerCase()}`,
+              )}
             >
               <h1>{topic}</h1>
             </Link>

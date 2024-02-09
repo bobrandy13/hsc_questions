@@ -9,15 +9,30 @@ const formatFileName = (fileName: string): string => {
   return fileName.replace(/\s/g, "");
 };
 
+const private_key = Buffer.from(
+  process.env.GOOGLE_PRIVATE_KEY ?? "",
+  "base64",
+).toString("ascii");
+
 const cloudStorage = new Storage({
   keyFilename: `intrepid-pride-385906-1911f6f5be41.json`,
   projectId: "intrepid-pride-385906",
+  credentials: {
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    private_key: private_key,
+  },
 });
+// TOOD: Prevent the form and rate limit the amount of data that can be sent at one time;
 
 const bucket = cloudStorage.bucket("framingwebsite");
 let q_url = "";
 let a_url = "";
 
+/** @function
+ * @name function that submits the uploaded photo onto Google Cloud Storage
+ * @param formData the uploaded file with type FormData
+ *
+ */
 export default async function submitForm(formData: FormData) {
   const question: File | null = formData.get("question_url") as unknown as File;
   const answer: File | null = formData.get("answer_url") as unknown as File;

@@ -10,6 +10,7 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { useEffect, useState } from "react";
+import { SignOutButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [windowDimensions, setDimensions] = useState<{
@@ -27,7 +28,7 @@ export default function Navbar() {
   }
 
   if (windowDimensions.width < 1024) {
-    // render the mobile menu
+    // render the mobile menu if the screen size is less than 1024 px;
     return (
       <NavigationMenu>
         <NavigationMenuList>
@@ -47,11 +48,14 @@ export default function Navbar() {
     <div className="sticky top-0 z-40 flex h-16 w-full items-center bg-white p-4 dark:bg-black">
       <div className="text-3xl font-bold">
         <Link href="/">
-          <h1 className="">{`Kevin's insane study app`}</h1>
+          <h1 className="">{`HSC Questions`}</h1>
         </Link>
       </div>
       <div className="order-2 ml-auto">
         <NavigationMenu>
+          <NavigationMenuList>
+            <SignOutButton />
+          </NavigationMenuList>
           <NavigationMenuList>
             <Link href="/maths" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>

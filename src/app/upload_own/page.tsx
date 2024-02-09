@@ -15,17 +15,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import file from "~/server/files";
 import submitForm from "~/server/submitForm";
-
-const MAX_FILE_SIZE = 50000000;
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -63,15 +53,6 @@ export default function ProfileForm() {
     } else {
       alert("file uploaded");
     }
-    // const post_question = api.post_question.createQuestion({
-    //   title: values.title,
-    //   topic: values.topic,
-    //   question_url: values.question_url,
-    //   answer_url: values.answer_url,
-    // });
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // console.log(values);
   }
 
   return (
