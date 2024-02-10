@@ -15,3 +15,8 @@ export const extension_1_maths_topics = [
   "Binomial Distribtuion",
   "Calculus",
 ];
+
+export const all_topics = [
+  ...extension_1_maths_topics,
+  ...extension_2_maths_topics,
+];

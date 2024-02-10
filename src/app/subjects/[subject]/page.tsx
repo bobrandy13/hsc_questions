@@ -20,19 +20,25 @@ export default async function Page({
     <div className="p-4">
       <h1>Sort questions by topic</h1>
 
-      {data.topics.map((topic, key) => (
-        <div key={key}>
-          <Button className="m-2 p-2 text-xl">
-            <Link
-              href={normaliseURL(
-                `/subjects/${params.subject}/topics/${topic.toLowerCase()}`,
-              )}
-            >
-              <h1>{topic}</h1>
-            </Link>
-          </Button>
-        </div>
-      ))}
+      <div className="m-4 flex flex-grow items-center justify-between rounded">
+        {data.topics.map((topic, key) => (
+          <Link
+            href={normaliseURL(
+              `/subjects/${params.subject}/topics/${topic.toLowerCase()}`,
+            )}
+            key={key}
+            className="m-4 h-24 w-full rounded bg-black p-3 text-white dark:bg-gray-200"
+          >
+            <div className="">
+              <div className="">
+                <h1 className="cursor-pointer text-blue-200 hover:underline dark:text-black">
+                  {topic}
+                </h1>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

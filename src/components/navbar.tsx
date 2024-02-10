@@ -11,6 +11,8 @@ import {
 } from "~/components/ui/navigation-menu";
 import { useEffect, useState } from "react";
 import { SignOutButton } from "@clerk/nextjs";
+import { Input } from "./ui/input";
+import { CommandMenu } from "./CommandMenu";
 
 export default function Navbar() {
   const [windowDimensions, setDimensions] = useState<{
@@ -61,8 +63,13 @@ export default function Navbar() {
       </div>
       <div className="order-2 ml-auto">
         <NavigationMenu>
-          <NavigationMenuList>
-            <SignOutButton />
+          <NavigationMenuList className="mr-3">
+            {/* search field */}
+            <Input type="text" placeholder="Search" />
+            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xl font-medium text-muted-foreground opacity-100">
+              <span className="text-2xl">⌘</span>;
+            </kbd>
+            <CommandMenu />
           </NavigationMenuList>
           <NavigationMenuList>
             <Link href="/maths" legacyBehavior passHref>

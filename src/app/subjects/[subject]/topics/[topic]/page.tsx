@@ -14,7 +14,11 @@ async function Topic({ params }: { params: { topic: string } }) {
       {questions.questions.map((question, key: number) => {
         return (
           <div key={key}>
-            <Question_collapsible question={question} key={key} />
+            <Question_collapsible
+              question={question}
+              key={key}
+              topic={params.topic}
+            />
           </div>
         );
       })}

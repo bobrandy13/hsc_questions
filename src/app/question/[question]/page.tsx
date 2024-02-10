@@ -1,7 +1,6 @@
-"use client";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { api } from "~/trpc/server";
+
 import {
   Card,
   CardContent,
@@ -17,22 +16,17 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 
-function Question_collapsible({
-  question,
-  topic,
+export default async function Question({
+  params,
 }: {
-  question: {
-    id: string;
-    title: string;
-    topic: string;
-    question_url: string;
-    answer_url: string;
-  };
-  topic: string;
+  params: { question: string };
 }) {
-  const pathName = usePathname();
+  const question = await api.post_question.getQuestion.query({
+    id: params.question,
+  });
 
-  console.log(pathName);
+  if (!question) return <div>loading</div>;
+  console.log("question_data", question);
   return (
     <Card>
       <CardHeader>
@@ -43,18 +37,14 @@ function Question_collapsible({
       </CardContent>
       <CardFooter className="flex flex-col justify-center">
         <div className="relative flex w-full justify-center p-4 md:w-3/4">
-          <Link href={`/question/${question.id}`}>
-            <div className="">
-              <Image
-                src={question.question_url}
-                width={0}
-                height={0}
-                alt="question_url"
-                sizes="100vw"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </div>
-          </Link>
+          <Image
+            src={question.question_url}
+            width={0}
+            height={0}
+            alt="question_url"
+            sizes="100vw"
+            style={{ width: "100%", height: "100%" }}
+          />
         </div>
         <Collapsible className="w-full md:w-3/4">
           <CollapsibleTrigger className="flex w-full justify-center p-2">
@@ -79,5 +69,3 @@ function Question_collapsible({
     </Card>
   );
 }
-
-export default Question_collapsible;

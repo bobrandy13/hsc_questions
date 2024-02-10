@@ -43,7 +43,7 @@ export default function ProfileForm() {
     form.reset();
     const formData = new FormData();
     formData.append("title", values.title);
-    formData.append("topic", values.topic);
+    formData.append("topic", values.topic.toLowerCase());
     formData.append("question_url", values.question_url);
     formData.append("answer_url", values.answer_url);
     const response = await submitForm(formData);
@@ -88,7 +88,7 @@ export default function ProfileForm() {
                 <FormLabel>TOpic</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="shadcn"
+                    placeholder="topic"
                     {...field}
                     value={field.value ?? ""}
                   />

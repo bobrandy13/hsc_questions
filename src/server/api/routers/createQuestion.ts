@@ -3,7 +3,7 @@ import prisma from "~/lib/prisma";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
-export const createQuestoin = createTRPCRouter({
+export const Question = createTRPCRouter({
   createQuestion: publicProcedure
     .input(
       z.object({
@@ -25,5 +25,18 @@ export const createQuestoin = createTRPCRouter({
       return {
         question,
       };
+    }),
+  getQuestion: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(({ input }) => {
+      return prisma.question.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
     }),
 });
