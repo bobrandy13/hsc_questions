@@ -30,18 +30,26 @@ export default function Navbar() {
   if (windowDimensions.width < 1024) {
     // render the mobile menu if the screen size is less than 1024 px;
     return (
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Subjects</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink>
-                <p className={"p-2"}>Maths</p>
-              </NavigationMenuLink>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+      <div className="flex w-screen items-center p-4">
+        <div className="text-xl font-bold">
+          <Link href="/">
+            <h1 className="">{`HSC Questions`}</h1>
+          </Link>
+        </div>
+        <div className="mr-auto">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link href="/maths" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Maths
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+      </div>
     );
   }
   return (
@@ -60,13 +68,6 @@ export default function Navbar() {
             <Link href="/maths" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Maths
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuList>
-          <NavigationMenuList>
-            <Link href="/docs" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Software Design and Development
               </NavigationMenuLink>
             </Link>
           </NavigationMenuList>

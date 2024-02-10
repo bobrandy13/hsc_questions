@@ -6,6 +6,9 @@ async function Topic({ params }: { params: { topic: string } }) {
 
   console.log(questions);
 
+  if (questions.questions.length === 0)
+    return <div className="p-4 text-5xl font-bold">no questions found...</div>;
+
   return (
     <div>
       {questions.questions.map((question, key: number) => {

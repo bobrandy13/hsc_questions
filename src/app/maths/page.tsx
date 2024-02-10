@@ -10,8 +10,8 @@ const topics = [
 ];
 export default function Maths() {
   return (
-    <div className="flex h-screen w-screen justify-center p-10 md:justify-normal">
-      <ul className={"flex h-screen w-full md:flex-row"}>
+    <div className="flex h-screen w-screen flex-col flex-wrap md:justify-normal">
+      <ul className={"flex flex-col items-center justify-center md:flex-row"}>
         {topics.map((topic, key) => (
           <Link
             href={`/subjects/${normaliseURL(topic.subject_code)}`}

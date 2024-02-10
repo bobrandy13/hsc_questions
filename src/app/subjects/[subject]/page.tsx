@@ -22,7 +22,7 @@ export default async function Page({
 
       {data.topics.map((topic, key) => (
         <div key={key}>
-          <Button>
+          <Button className="m-2 p-2 text-xl">
             <Link
               href={normaliseURL(
                 `/subjects/${params.subject}/topics/${topic.toLowerCase()}`,

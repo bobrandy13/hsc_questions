@@ -34,8 +34,10 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <Navbar />
-              {children}
+              <div className="h-screen w-screen">
+                <Navbar />
+                {children}
+              </div>
             </ThemeProvider>
           </TRPCReactProvider>
         </body>
