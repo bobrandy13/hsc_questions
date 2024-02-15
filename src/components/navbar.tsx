@@ -58,7 +58,7 @@ export default function Navbar() {
     );
   }
   return (
-    <div className="sticky top-0 z-40 flex h-16 w-full items-center p-4 dark:bg-black ">
+    <div className="sticky top-0 z-40 flex h-16 w-full items-center p-4 dark:bg-black bg-white ">
       <div className="text-3xl font-bold">
         <Link href="/">
           <h1 className="">{`HSC Questions`}</h1>

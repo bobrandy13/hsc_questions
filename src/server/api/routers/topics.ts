@@ -11,7 +11,10 @@ export const topicsRouter = createTRPCRouter({
       console.log(input);
       const questions = await prisma.question.findMany({
         where: {
-            topic: input.topic
+            AND: [
+                {topic: input.topic},
+                {content_level: input.subject}
+            ]
         },
       });
       return {

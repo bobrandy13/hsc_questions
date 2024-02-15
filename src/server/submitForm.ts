@@ -46,7 +46,6 @@ export default async function submitForm(formData: FormData) {
   const subject = formData.get('subject') as string;
   const topic = formData.get("topic") as string;
 
-  console.log(title, subject, topic);
 
   if (!question || !answer) {
     return {
@@ -69,7 +68,6 @@ export default async function submitForm(formData: FormData) {
     })
     .on("finish", () => {
       const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-      console.log(publicUrl);
     })
     .end(buffer);
 
@@ -93,12 +91,10 @@ export default async function submitForm(formData: FormData) {
       resumable: false,
     })
     .on("error", (err) => {
-      console.log("there has been an error 2");
       console.error(err);
     })
     .on("finish", () => {
       const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-      console.log(publicUrl);
     })
     .end(answer_buffer);
 
