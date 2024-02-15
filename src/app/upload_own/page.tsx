@@ -3,7 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Check, ChevronsUpDown } from "lucide-react"
 
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from "~/components/ui/command"
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -15,12 +23,22 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "~/components/ui/popover"
 import submitForm from "~/server/submitForm";
+import {all_topics, subjects} from "~/server/topics";
+import {cn} from "~/lib/utils";
+import normaliseURL from "~/server/normaliseURL";
 
 const formSchema = z.object({
   title: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+    subject: z.string(),
   topic: z.string().min(2, {
     message: "Topic must be at least 2 characters.",
   }),
@@ -43,9 +61,10 @@ export default function ProfileForm() {
     form.reset();
     const formData = new FormData();
     formData.append("title", values.title);
-    formData.append("topic", values.topic.toLowerCase());
+    formData.append("topic", normaliseURL(values.topic.toLowerCase()));
     formData.append("question_url", values.question_url);
     formData.append("answer_url", values.answer_url);
+    formData.append("subject", values.subject);
     const response = await submitForm(formData);
 
     if (!response) {
@@ -79,35 +98,141 @@ export default function ProfileForm() {
                 <FormMessage />
               </FormItem>
             )}
-          />{" "}
+          />
+            <FormField
+                control={form.control}
+                name="subject"
+                render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                        <FormLabel>Subject</FormLabel>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <FormControl>
+                                    <Button
+                                        variant="outline"
+                                        role="combobox"
+                                        className={cn(
+                                            "w-full justify-between",
+                                            !field.value && "text-muted-foreground"
+                                        )}
+                                    >
+                                        {field.value
+                                            ? subjects.find(
+                                                (subject) => subject === field.value
+                                            )
+                                            : "Select subject"}
+                                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                    <CommandInput placeholder="Search subject..." />
+                                    <CommandEmpty>No subject found.</CommandEmpty>
+                                    <CommandGroup>
+                                        {subjects.map((value: string, key :number) => (
+                                            <CommandItem
+                                                value={value}
+                                                key={key}
+                                                onSelect={() => {
+                                                    form.setValue("subject", value)
+                                                }}
+                                            >
+                                                <Check
+                                                    className={cn(
+                                                        "mr-2 h-4 w-4",
+                                                        value === field.value
+                                                            ? "opacity-100"
+                                                            : "opacity-0"
+                                                    )}
+                                                />
+                                                {value}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+                        <FormDescription>
+                            This is the subject that this question will be under.
+                        </FormDescription>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
           <FormField
             control={form.control}
             name="topic"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>TOpic</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="topic"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
-                </FormControl>
-                <FormDescription>This is the topic</FormDescription>
-                <FormMessage />
-              </FormItem>
+                <FormItem className="flex flex-col">
+                    <FormLabel>Topic</FormLabel>
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <FormControl>
+                                <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    className={cn(
+                                        "w-full justify-between",
+                                        !field.value && "text-muted-foreground"
+                                    )}
+                                >
+                                    {field.value
+                                        ? all_topics.find(
+                                            (language) => language === field.value
+                                        )
+                                        : "Select topic"}
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[200px] p-0">
+                            <Command>
+                                <CommandInput placeholder="Search topic..." />
+                                <CommandEmpty>No topic found.</CommandEmpty>
+                                <CommandGroup>
+                                    {all_topics.map((value: string, key :number) => (
+                                        <CommandItem
+                                            value={value}
+                                            key={key}
+                                            onSelect={() => {
+                                                form.setValue("topic", value)
+                                            }}
+                                        >
+                                            <Check
+                                                className={cn(
+                                                    "mr-2 h-4 w-4",
+                                                    value === field.value
+                                                        ? "opacity-100"
+                                                        : "opacity-0"
+                                                )}
+                                            />
+                                            {value}
+                                        </CommandItem>
+                                    ))}
+                                </CommandGroup>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                        This is the topic that will be used in the dashboard.
+                    </FormDescription>
+                    <FormMessage />
+                </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="question_url"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="">
                 <FormLabel>upload_url</FormLabel>
                 <FormControl>
                   <Input
                     id="picture"
                     type="file"
+                    className="dark:bg-none dark:text-black"
                     onChange={(e) =>
                       field.onChange(e.target.files ? e.target.files[0] : null)
                     }

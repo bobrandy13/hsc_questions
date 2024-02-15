@@ -20,18 +20,18 @@ export default async function Page({
     <div className="p-4">
       <h1>Sort questions by topic</h1>
 
-      <div className="m-4 flex flex-grow items-center justify-between rounded">
+      <div className="min-w-md m-4 flex flex-grow flex-wrap items-center justify-between rounded">
         {data.topics.map((topic, key) => (
           <Link
             href={normaliseURL(
               `/subjects/${params.subject}/topics/${topic.toLowerCase()}`,
             )}
             key={key}
-            className="m-4 h-24 w-full rounded bg-black p-3 text-white dark:bg-gray-200"
+            className="m-4 h-24 w-full rounded bg-foreground p-3 text-white hover:bg-gray-900 dark:bg-gray-200"
           >
             <div className="">
               <div className="">
-                <h1 className="cursor-pointer text-blue-200 hover:underline dark:text-black">
+                <h1 className="cursor-pointer text-white hover:underline dark:text-black">
                   {topic}
                 </h1>
               </div>

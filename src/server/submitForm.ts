@@ -40,11 +40,13 @@ const bucket = cloudStorage.bucket("framingwebsite");
  * @returns a promise that resolves to the question object
  */
 export default async function submitForm(formData: FormData) {
-  console.log(key);
   const question: File | null = formData.get("question_url") as unknown as File;
   const answer: File | null = formData.get("answer_url") as unknown as File;
   const title = formData.get("title") as string;
+  const subject = formData.get('subject') as string;
   const topic = formData.get("topic") as string;
+
+  console.log(title, subject, topic);
 
   if (!question || !answer) {
     return {
@@ -115,6 +117,7 @@ export default async function submitForm(formData: FormData) {
   return prisma.question.create({
     data: {
       title: title,
+      content_level: subject,
       topic: topic,
       question_url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
       answer_url: `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`,

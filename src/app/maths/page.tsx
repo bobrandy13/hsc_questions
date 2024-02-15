@@ -6,7 +6,6 @@ const topics = [
   { subject_name: "Maths Extension 2", subject_code: "4U" },
   { subject_name: "Maths Extension 1", subject_code: "3U" },
   { subject_name: "Maths Advanced", subject_code: "2U" },
-  { subject_name: "Maths Standard", subject_code: "21" },
 ];
 export default function Maths() {
   return (

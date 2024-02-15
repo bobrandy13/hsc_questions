@@ -50,6 +50,30 @@ export function CommandMenu() {
               {topic}
             </CommandItem>
           ))}
+          <CommandItem
+            onSelect={() => {
+              router.push("/subjects/3U");
+              setOpen(false);
+            }}
+          >
+            Maths Extension 1
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              router.push("/subjects/2U");
+              setOpen(false);
+            }}
+          >
+            Maths Advanced
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              router.push("/subjects/4U");
+              setOpen(false);
+            }}
+          >
+            Maths Extension 2
+          </CommandItem>
         </CommandGroup>
       </CommandList>
     </CommandDialog>

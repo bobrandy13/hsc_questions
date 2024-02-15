@@ -1,6 +1,9 @@
 import prisma from "~/lib/prisma";
 import { z } from "zod";
-import { extension_1_maths_topics } from "~/server/topics";
+import {
+  extension_1_maths_topics,
+  maths_advanced_topics,
+} from "~/server/topics";
 import { extension_2_maths_topics } from "~/server/topics";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -18,6 +21,10 @@ export const listTopicsRouter = createTRPCRouter({
         case "3U":
           return {
             topics: extension_1_maths_topics,
+          };
+        case "2U":
+          return {
+            topics: maths_advanced_topics,
           };
         default:
           return {

@@ -11,10 +11,11 @@ datasource db {
 }
 
 model Question {
-    id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    title    String
-    topic String
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  content_level String
+  topic         String
 
-    question_url String
-    answer_url  String
+  question_url String
+  answer_url   String
 }

@@ -13,9 +13,9 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "HSC Questions",
+  title: "HSC Questions for you",
   description: "HSC questions sorted by topic",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  // icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
           <TRPCReactProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="system"
+              defaultTheme="light"
               enableSystem
               disableTransitionOnChange
             >

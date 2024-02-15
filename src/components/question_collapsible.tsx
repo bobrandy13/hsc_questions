@@ -19,7 +19,6 @@ import {
 
 function Question_collapsible({
   question,
-  topic,
 }: {
   question: {
     id: string;
@@ -28,7 +27,6 @@ function Question_collapsible({
     question_url: string;
     answer_url: string;
   };
-  topic: string;
 }) {
   const pathName = usePathname();
 
@@ -43,8 +41,11 @@ function Question_collapsible({
       </CardContent>
       <CardFooter className="flex flex-col justify-center">
         <div className="relative flex w-full justify-center p-4 md:w-3/4">
-          <Link href={`/question/${question.id}`}>
-            <div className="">
+          <Link
+            href={`/question/${question.id}`}
+            className="flex w-screen justify-center"
+          >
+            <div className="w-3/4">
               <Image
                 src={question.question_url}
                 width={0}

@@ -9,12 +9,15 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
+
+import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { SignOutButton } from "@clerk/nextjs";
 import { Input } from "./ui/input";
 import { CommandMenu } from "./CommandMenu";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
   const [windowDimensions, setDimensions] = useState<{
     width: number;
     height: number;
@@ -55,7 +58,7 @@ export default function Navbar() {
     );
   }
   return (
-    <div className="sticky top-0 z-40 flex h-16 w-full items-center bg-white p-4 dark:bg-black">
+    <div className="sticky top-0 z-40 flex h-16 w-full items-center p-4 dark:bg-black ">
       <div className="text-3xl font-bold">
         <Link href="/">
           <h1 className="">{`HSC Questions`}</h1>
@@ -65,9 +68,8 @@ export default function Navbar() {
         <NavigationMenu>
           <NavigationMenuList className="mr-3">
             {/* search field */}
-            <Input type="text" placeholder="Search" />
             <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xl font-medium text-muted-foreground opacity-100">
-              <span className="text-2xl">⌘</span>;
+              <span className="text-xl">Ctrl</span>;<p> to search</p>
             </kbd>
             <CommandMenu />
           </NavigationMenuList>
