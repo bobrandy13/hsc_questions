@@ -35,7 +35,7 @@ export default function Navbar() {
   if (windowDimensions.width < 1024) {
     // render the mobile menu if the screen size is less than 1024 px;
     return (
-      <div className="flex w-screen items-center p-4">
+      <div className="flex w-screen items-center p-4  ">
         <div className="text-xl font-bold">
           <Link href="/">
             <h1 className="">{`HSC Questions`}</h1>
@@ -77,6 +77,13 @@ export default function Navbar() {
             <Link href="/maths" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Maths
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuList>
+          <NavigationMenuList>
+            <Link href="/english" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                English
               </NavigationMenuLink>
             </Link>
           </NavigationMenuList>
