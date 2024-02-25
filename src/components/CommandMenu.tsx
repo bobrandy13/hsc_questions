@@ -10,7 +10,7 @@ import {
   CommandList,
 } from "~/components/ui/command";
 import normaliseURL from "~/server/normaliseURL";
-import { all_topics } from "~/server/topics";
+import { all_topics, mathsTopics } from "~/server/topics";
 
 export function CommandMenu() {
   const router = useRouter();
@@ -45,8 +45,13 @@ export function CommandMenu() {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
-          {all_topics.map((topic, key) => (
-            <CommandItem key={key} onSelect={setSearch}>
+          {mathsTopics.map(({ topic, level }, key) => (
+            <CommandItem key={key} onSelect={() => {
+
+              router.replace(`/subjects/${(level == "extension1") ? "3U" : (level == "extension2") ? "4U" : "2U"}/topics/${topic.toLowerCase()}`);
+              setOpen(false);
+            }}>
+              {(level == "extension1") ? "3U" : (level == "extension2") ? "4U" : "2U"}{" "}
               {topic}
             </CommandItem>
           ))}
@@ -76,6 +81,6 @@ export function CommandMenu() {
           </CommandItem>
         </CommandGroup>
       </CommandList>
-    </CommandDialog>
+    </CommandDialog >
   );
 }
