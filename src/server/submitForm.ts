@@ -2,6 +2,7 @@
 
 import prisma from "~/lib/prisma";
 import { Storage } from "@google-cloud/storage";
+import getCurrentTimeString from "./getTime";
 
 // functoin to remove all the white spaces from a file name
 const formatFileName = (fileName: string): string => {
@@ -43,9 +44,9 @@ export default async function submitForm(formData: FormData) {
   const question: File | null = formData.get("question_url") as unknown as File;
   const answer: File | null = formData.get("answer_url") as unknown as File;
   const title = formData.get("title") as string;
-  const subject = formData.get('subject') as string;
+  const subject = formData.get("subject") as string;
   const topic = formData.get("topic") as string;
-
+  const name = formData.get("name") as string;
 
   if (!question || !answer) {
     return {
@@ -114,6 +115,8 @@ export default async function submitForm(formData: FormData) {
     data: {
       title: title,
       content_level: subject,
+      name: name,
+      createdAt: getCurrentTimeString(),
       topic: topic,
       question_url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
       answer_url: `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`,

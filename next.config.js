@@ -13,6 +13,12 @@ const config = {
         hostname: "storage.googleapis.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "img.clerk.com",
+        port: ""
+      }
+
     ],
   },
 };

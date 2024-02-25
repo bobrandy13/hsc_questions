@@ -3,6 +3,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { topicsRouter } from "./routers/topics";
 import { Question } from "./routers/createQuestion";
 import { listTopicsRouter } from "./routers/listTopicRouter";
+import { commentRouter } from "./routers/commentRouter";
 
 /**
  * This is the primary router for your server.
@@ -17,6 +18,8 @@ export const appRouter = createTRPCRouter({
   topics: topicsRouter,
 
   post_question: Question,
+
+  commentRouter: commentRouter,
 });
 
 // export type definition of API

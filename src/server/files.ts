@@ -5,4 +5,5 @@ async function file(formData: FormData) {
   console.log("File name:", file.name, "file size:", file.size);
 }
 
+
 export default file;

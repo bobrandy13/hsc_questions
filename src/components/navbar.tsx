@@ -12,11 +12,14 @@ import {
 
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
-import { SignOutButton } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import { Input } from "./ui/input";
 import { CommandMenu } from "./CommandMenu";
+import Image from "next/image";
 
 export default function Navbar() {
+  const { isLoaded, isSignedIn, user } = useUser();
+  console.log(user);
   const [open, setOpen] = useState(false);
   const [windowDimensions, setDimensions] = useState<{
     width: number;
@@ -34,31 +37,10 @@ export default function Navbar() {
 
   if (windowDimensions.width < 1024) {
     // render the mobile menu if the screen size is less than 1024 px;
-    return (
-      <div className="flex w-screen items-center p-4  ">
-        <div className="text-xl font-bold">
-          <Link href="/">
-            <h1 className="">{`HSC Questions`}</h1>
-          </Link>
-        </div>
-        <div className="mr-auto">
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <Link href="/maths" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Maths
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
-      </div>
-    );
+    return MobileWindow();
   }
   return (
-    <div className="sticky top-0 z-40 flex h-16 w-full items-center p-4 dark:bg-black bg-white ">
+    <div className="sticky top-0 z-40 flex h-16 w-full items-center border bg-white p-4 dark:bg-black">
       <div className="text-3xl font-bold">
         <Link href="/">
           <h1 className="">{`HSC Questions`}</h1>
@@ -80,19 +62,63 @@ export default function Navbar() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuList>
-          <NavigationMenuList>
-            <Link href="/english" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                English
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuList>
+          {/* <NavigationMenuList> */}
+          {/*   <Link href="/english" legacyBehavior passHref> */}
+          {/*     <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
+          {/*       English */}
+          {/*     </NavigationMenuLink> */}
+          {/*   </Link> */}
+          {/* </NavigationMenuList> */}
           <NavigationMenuList>
             <Link href="/upload_own" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Upload your own
               </NavigationMenuLink>
             </Link>
+          </NavigationMenuList>
+          <NavigationMenuList>
+            <div className="text-sm flex flex-row">
+              {isSignedIn ? (
+                <div>
+                  <div className="rounded-full relative w-10 h-10 flex flex-row">
+                    <Image src={user.imageUrl} alt="profile image" fill objectFit="cover" style={{ borderRadius: "100%" }} />
+                  </div>
+                  <div className="float-right">
+                  </div>
+                </div>
+              ) : ""}
+            </div>
+          </NavigationMenuList>
+          <NavigationMenuList>
+            <div className="text-sm pl-3 font-medium hover:bg-gray-50 ">
+              {isSignedIn ? (
+                <SignOutButton />
+              ) : <SignInButton />}
+            </div>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+    </div>
+  );
+}
+function MobileWindow() {
+  return (
+    <div className="flex w-screen items-center p-4  ">
+      <div className="text-xl font-bold">
+        <Link href="/">
+          <h1 className="">{`HSC Questions`}</h1>
+        </Link>
+      </div>
+      <div className="mr-auto">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link href="/maths" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Maths
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
