@@ -62,13 +62,6 @@ export default function Navbar() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuList>
-          {/* <NavigationMenuList> */}
-          {/*   <Link href="/english" legacyBehavior passHref> */}
-          {/*     <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
-          {/*       English */}
-          {/*     </NavigationMenuLink> */}
-          {/*   </Link> */}
-          {/* </NavigationMenuList> */}
           <NavigationMenuList>
             <Link href="/upload_own" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -77,23 +70,28 @@ export default function Navbar() {
             </Link>
           </NavigationMenuList>
           <NavigationMenuList>
-            <div className="text-sm flex flex-row">
+            <div className="flex flex-row text-sm">
               {isSignedIn ? (
                 <div>
-                  <div className="rounded-full relative w-10 h-10 flex flex-row">
-                    <Image src={user.imageUrl} alt="profile image" fill objectFit="cover" style={{ borderRadius: "100%" }} />
+                  <div className="relative flex h-10 w-10 flex-row rounded-full">
+                    <Image
+                      src={user.imageUrl}
+                      alt="profile image"
+                      fill
+                      objectFit="cover"
+                      style={{ borderRadius: "100%" }}
+                    />
                   </div>
-                  <div className="float-right">
-                  </div>
+                  <div className="float-right"></div>
                 </div>
-              ) : ""}
+              ) : (
+                ""
+              )}
             </div>
           </NavigationMenuList>
           <NavigationMenuList>
-            <div className="text-sm pl-3 font-medium hover:bg-gray-50 ">
-              {isSignedIn ? (
-                <SignOutButton />
-              ) : <SignInButton />}
+            <div className="pl-3 text-sm font-medium hover:bg-gray-50 ">
+              {isSignedIn ? <SignOutButton /> : <SignInButton />}
             </div>
           </NavigationMenuList>
         </NavigationMenu>

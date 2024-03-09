@@ -20,6 +20,8 @@ model Question {
 
   question_url String
   answer_url   String
+  likes       Int
+  dislikes    Int
   Comment      Comment[]
 }
 

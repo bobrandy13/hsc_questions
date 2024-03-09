@@ -1,7 +1,16 @@
 import convertDateTime from "~/server/convertDateTime";
 
-export default function IndividualComments({ comments }: {
-  author: string, content: string, createdAt: string, id: string, questionId: string, updatedAt: string
+export default function IndividualComments({
+  comments,
+}: {
+  comments: Array<{
+    author: string;
+    content: string;
+    createdAt: string;
+    id: string;
+    questionId: string;
+    updatedAt: string;
+  }>;
 }) {
   console.log("comments", comments);
   return (
@@ -10,10 +19,12 @@ export default function IndividualComments({ comments }: {
         Discussion.
       </h1>
       <div className="p-4">
-        {comments.map(({ id, questionId, content, author, createdAt }, key) => {
+        {comments.map((comment, key: number) => {
+          if (comments.length === 0) return;
           return (
             <p key={key}>
-              <strong>{author}</strong> wrote {content} at now
+              <strong>{comment.author}</strong> wrote {comment.content} at{" "}
+              {convertDateTime(comment.createdAt).toDateString()}
             </p>
           );
         })}

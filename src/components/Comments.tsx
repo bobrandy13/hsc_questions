@@ -53,8 +53,13 @@ export default function Comments({
   question_id,
 }: {
   comments: Array<{
-    author: string, content: string, createdAt: string, id: string, questionId: string, updatedAt: string
-  }>[];
+    author: string;
+    content: string;
+    createdAt: string;
+    id: string;
+    questionId: string;
+    updatedAt: string;
+  }>;
   question_id: string;
 }) {
   const { isSignedIn, user, isLoaded } = useUser();

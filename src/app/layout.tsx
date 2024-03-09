@@ -15,7 +15,6 @@ const inter = Inter({
 export const metadata = {
   title: "HSC Questions for you",
   description: "HSC questions sorted by topic",
-  // icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({

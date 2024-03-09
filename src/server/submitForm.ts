@@ -117,6 +117,8 @@ export default async function submitForm(formData: FormData) {
       content_level: subject,
       name: name,
       createdAt: getCurrentTimeString(),
+      likes: 0,
+      dislikes: 0,
       topic: topic,
       question_url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
       answer_url: `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`,
