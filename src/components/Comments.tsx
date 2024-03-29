@@ -96,14 +96,19 @@ export default function Comments({
             const inputValue =
               (inputRef.current as unknown as HTMLInputElement)?.value ??
               undefined;
+
+            const current_date = new Date().toISOString();
+
+            router.refresh();
+            window.location.reload();
+
             void submitComment({
               id: question_id,
               comment: inputValue,
               author: user.username ?? "Anonymous",
-              createdAt: Date.toString(),
+              createdAt: current_date,
             });
 
-            router.refresh();
             (inputRef.current as unknown as HTMLInputElement)?.value == "";
           }}
         >

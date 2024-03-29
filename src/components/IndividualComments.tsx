@@ -12,13 +12,12 @@ export default function IndividualComments({
     updatedAt: string;
   }>;
 }) {
-  console.log("comments", comments);
   return (
-    <div className="h-full  ">
+    <div className="h-full overflow-y-scroll">
       <h1 className="p-4 text-2xl font-semibold leading-none tracking-tight">
         Discussion.
       </h1>
-      <div className="p-4">
+      <div className="h-full overflow-y-scroll p-4">
         {comments.map((comment, key: number) => {
           if (comments.length === 0) return;
           return (
