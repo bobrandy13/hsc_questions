@@ -39,16 +39,6 @@ export default function Maths() {
           </div>
         ))}
       </ul>
-      <div className="bg-gray-50 p-10 hover:bg-blue-100 m-3">
-        <Link href="/subjects/3U/topics/ap3" className="hover: bg-zinc-500">
-          <h1>Ap3 revision</h1>
-        </Link>
-      </div>
-      <div className="bg-gray-50 p-10 hover:bg-blue-100 m-3">
-        <Link href="/subjects/4U/topics/ap3" className="hover: bg-zinc-500">
-          <h1>Ap3 Extension 2 revision</h1>
-        </Link>
-      </div>
     </div>
   );
 }

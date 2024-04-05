@@ -65,10 +65,6 @@ export default function Comments({
   const { isSignedIn, user, isLoaded } = useUser();
   const inputRef = useRef(null);
   const router = useRouter();
-  // const comment =  api.create_comment.fetchComments.query({
-  // id: question_id,
-  // });
-  // console.log(comment);
   return (
     <div className="relative h-full border bg-gray-50 p-4 ">
       <IndividualComments comments={comments} />
@@ -83,7 +79,7 @@ export default function Comments({
               (inputRef.current as HTMLInputElement)?.value?.trim() === ""
             ) {
               alert(
-                "please enter a comment before submitting dont break my backend please",
+                "please enter a comment before submitting. dont break my backend please",
               );
               return;
             }

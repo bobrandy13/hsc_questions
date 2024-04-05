@@ -28,7 +28,7 @@ export default function Card({
     if (face_emoji == "4U") setFace(sad_face);
     else if (face_emoji == "3U") setFace(normal_face);
     else setFace(happy_face);
-  }, []);
+  }, [face_emoji]);
 
   return (
     <div className=" m-8 max-w-lg gap-4 rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800 lg:w-full">
@@ -41,9 +41,6 @@ export default function Card({
             {topic}
           </h5>
         </a>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {description}
-        </p>
         <Link
           href={`/subjects/${normaliseURL(face_emoji)}`}
           className="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

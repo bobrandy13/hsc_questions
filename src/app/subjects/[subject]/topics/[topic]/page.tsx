@@ -1,34 +1,45 @@
 import { api } from "~/trpc/server";
 import Question_collapsible from "~/components/question_collapsible";
+import { ReadonlyURLSearchParams } from "next/navigation";
+import Link from "next/link";
+import PaginationControls from "~/components/Pagination";
 
-async function Topic({
+
+export default async function Topic({
   params,
+  searchParams,
 }: {
   params: { topic: string; subject: string };
+  searchParams: { page: number, per_page: number }
 }) {
   const questions = await api.topics.fetch_questions.query({
     subject: params.subject,
     topic: params.topic,
   });
 
-  if (questions.questions.length === 0)
-    return (
-      <div className="p-4 text-3xl font-bold">
-        no questions found under {params.subject}/{params.topic}
-      </div>
-    );
+  const per_pg = Number(searchParams.per_page)
+  const page = (searchParams.page - 1);
+  const start_index = page * per_pg
+  const end_index = start_index + per_pg
+  const page_slice = [start_index, end_index];
+
+  console.log(start_index, end_index)
 
   return (
     <div>
-      {questions.questions.map((question, key: number) => {
-        return (
-          <div key={key}>
-            <Question_collapsible question={question} key={key} />
-          </div>
-        );
-      })}
+      <div>
+        {questions.questions.slice(page_slice[0], Number(page_slice[1])).map((question, key: number) => {
+          return (
+            <div key={key}>
+              <Question_collapsible question={question} key={key} />
+            </div>
+          );
+        })}
+
+        <div className="flex justify-center w-full p-3">
+          <PaginationControls subject_name={params.subject} topic_name={params.topic} total_items={questions.questions.length} hasPrev={start_index - per_pg >= 0} hasNext={end_index + per_pg <= questions.questions.length + per_pg} />
+        </div>
+      </div>
     </div>
   );
 }
-
-export default Topic;

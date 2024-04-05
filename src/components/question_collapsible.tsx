@@ -19,6 +19,8 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 
+// implement pagination because too many things are being loaded at once; 
+
 function Question_collapsible({
   question,
 }: {

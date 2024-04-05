@@ -12,7 +12,11 @@ export default async function RecentUploads() {
       </h5>
       <div className="flex h-96 w-full flex-grow flex-row justify-center gap-4 rounded-lg border border-gray-200 bg-white p-4 text-center shadow dark:border-gray-700 dark:bg-gray-800 sm:p-8">
         {recentUploads.map((upload, key: number) => {
-          return <Recent_upload_card key={key} upload={upload} />;
+          return (
+            <div key={key}>
+              <Recent_upload_card upload={upload} />
+            </div>
+          );
         })}
       </div>
     </div>

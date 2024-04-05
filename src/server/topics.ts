@@ -64,13 +64,4 @@ export const mathsTopics = [
   { topic: "Random Variables", level: "advanced" },
 ];
 
-export const subjects = [
-  "4U",
-  "3U",
-  "2U",
-  "Physics",
-  "Bio",
-  "Chem",
-  "SDD",
-  "English",
-];
+export const subjects = ["4U", "3U", "2U"];

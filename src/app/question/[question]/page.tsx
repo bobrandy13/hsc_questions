@@ -32,7 +32,6 @@ export default async function Question({
   });
 
   if (!question) return <div>loading</div>;
-  console.log("question_data", comments);
   return (
     <div className="overflow-x-none flex h-full w-full flex-grow flex-row flex-wrap">
       <div className="w-full">

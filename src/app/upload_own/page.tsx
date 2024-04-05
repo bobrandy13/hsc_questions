@@ -108,7 +108,7 @@ export default function ProfileForm() {
             name="subject"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Subject</FormLabel>
+                <FormLabel>Level</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -240,7 +240,7 @@ export default function ProfileForm() {
                     }
                   />
                 </FormControl>
-                <FormDescription>THis is the question url</FormDescription>
+                <FormDescription>Upload image of the question</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -260,7 +260,7 @@ export default function ProfileForm() {
                     }
                   />
                 </FormControl>
-                <FormDescription>THis is the answer url</FormDescription>
+                <FormDescription>Upload image of the answer</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

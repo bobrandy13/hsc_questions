@@ -1,10 +1,8 @@
 import Link from "next/link";
 
 export default function Recent_upload_card({
-  key,
   upload,
 }: {
-  key: number;
   upload: {
     topic: string;
     id: string;
@@ -17,7 +15,7 @@ export default function Recent_upload_card({
   };
 }) {
   return (
-    <div key={key}>
+    <div>
       <Link
         href={`/question/${upload.id}`}
         className="block h-full max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
