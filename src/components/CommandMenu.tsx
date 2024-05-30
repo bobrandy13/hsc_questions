@@ -30,7 +30,7 @@ export function CommandMenu() {
   //   const [search, setSearch] = useState("");
 
   const setSearch = (value: string) => {
-    console.log("seaorched for", value);
+    console.log(normaliseURL(value));
     router.push(`/topics/${normaliseURL(value)}`);
 
     setOpen(false); // close the modal
@@ -46,12 +46,20 @@ export function CommandMenu() {
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
           {mathsTopics.map(({ topic, level }, key) => (
-            <CommandItem key={key} onSelect={() => {
-
-              router.replace(`/subjects/${(level == "extension1") ? "3U" : (level == "extension2") ? "4U" : "2U"}/topics/${topic.toLowerCase()}`);
-              setOpen(false);
-            }}>
-              {(level == "extension1") ? "3U" : (level == "extension2") ? "4U" : "2U"}{" "}
+            <CommandItem
+              key={key}
+              onSelect={() => {
+                router.replace(
+                  `/subjects/${level == "extension1" ? "3U" : level == "extension2" ? "4U" : "2U"}/topics/${normaliseURL(topic.toLowerCase())}`,
+                );
+                setOpen(false);
+              }}
+            >
+              {level == "extension1"
+                ? "3U"
+                : level == "extension2"
+                  ? "4U"
+                  : "2U"}{" "}
               {topic}
             </CommandItem>
           ))}
@@ -81,6 +89,6 @@ export function CommandMenu() {
           </CommandItem>
         </CommandGroup>
       </CommandList>
-    </CommandDialog >
+    </CommandDialog>
   );
 }

@@ -19,13 +19,23 @@ const topics = [
     subject_code: "2U",
     subject_description: "boring...",
   },
+  {
+    subject_name: "Ext 1 AT3",
+    subject_code: "EXT1AT3",
+    subject_description: ":((((",
+  },
+  {
+    subject_name: "Ext 2 AT3",
+    subject_code: "EXT2AT3",
+    subject_description: ":||||",
+  },
 ];
 export default function Maths() {
   return (
-    <div className="flex h-screen w-screen flex-col flex-wrap md:justify-normal">
+    <div className="">
       <ul
         className={
-          "flex w-full flex-col items-center justify-center gap-4 lg:flex-row"
+          "flex w-full flex-col flex-wrap items-center justify-center gap-4 lg:flex-row"
         }
       >
         {topics.map((topic, key) => (

@@ -20,7 +20,11 @@ export default function IndividualComments({
       <div className="h-full overflow-y-scroll p-4">
         {comments.map((comment, key: number) => {
           if (comments.length === 0) return;
-          return <Comment key={key} comment={comment} />;
+          return (
+            <div key={key}>
+              <Comment comment={comment} />
+            </div>
+          )
         })}
       </div>
     </div>
@@ -28,10 +32,8 @@ export default function IndividualComments({
 }
 
 export function Comment({
-  key,
   comment,
 }: {
-  key: number;
   comment: {
     author: string;
     content: string;
@@ -42,9 +44,15 @@ export function Comment({
   };
 }) {
   return (
-    <p key={key}>
-      <strong>{comment.author}</strong> wrote {comment.content} at{" "}
-      {convertDateTime(comment.createdAt).toDateString()}
-    </p>
+    <div className="p-3 bg-gray-100 m-1 rounded" >
+      <div>
+        <p className="inline">
+          <strong>{comment.author}</strong>:
+        </p>
+
+        <p className="float-right">{convertDateTime(comment.createdAt).toTimeString()}</p>
+      </div>
+      <p>{comment.content}</p>
+    </div>
   );
 }

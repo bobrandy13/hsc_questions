@@ -12,7 +12,7 @@ export const extension_1_maths_topics = [
   "Vectors",
   "Perms and Combs",
   "Proofs",
-  "Binomial Distribtuion",
+  "Binomial Distribution",
   "Calculus",
 ];
 

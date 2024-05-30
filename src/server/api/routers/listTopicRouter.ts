@@ -26,6 +26,7 @@ export const listTopicsRouter = createTRPCRouter({
           return {
             topics: maths_advanced_topics,
           };
+
         default:
           return {
             error: "Invalid subject",

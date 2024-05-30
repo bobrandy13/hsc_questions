@@ -3,6 +3,8 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import happy_face from "public/maths/happy face.jpeg";
+import crying_face from "public/maths/ext2at3.jpg";
+import stats from "public/maths/ext1at3.png";
 import normal_face from "public/maths/Normal Face Emoji.jpeg";
 import sad_face from "public/maths/extension 2.jpeg";
 import normaliseURL from "~/server/normaliseURL";
@@ -26,6 +28,8 @@ export default function Card({
 
   useEffect(() => {
     if (face_emoji == "4U") setFace(sad_face);
+    else if (face_emoji == "EXT1AT3") setFace(stats);
+    else if (face_emoji == "EXT2AT3") setFace(crying_face);
     else if (face_emoji == "3U") setFace(normal_face);
     else setFace(happy_face);
   }, [face_emoji]);
@@ -42,7 +46,13 @@ export default function Card({
           </h5>
         </a>
         <Link
-          href={`/subjects/${normaliseURL(face_emoji)}`}
+          href={
+            face_emoji == `EXT2AT3`
+              ? `/subjects/4U/topics/${face_emoji}`
+              : face_emoji == `EXT1AT3`
+                ? `/subjects/3U/topics/${face_emoji}`
+                : `/subjects/${normaliseURL(face_emoji)}`
+          }
           className="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Find questions

@@ -9,44 +9,6 @@ import submitComment from "~/server/submitComment";
 import { api } from "~/trpc/server";
 import IndividualComments from "./IndividualComments";
 
-const comments = [
-  {
-    id: "1",
-    question_id: "1",
-    content: "This is such a good question",
-    author: "Bob",
-  },
-  {
-    id: "2",
-    question_id: "1",
-    content: "This is such a good question",
-    author: "Kate",
-  },
-  {
-    id: "3",
-    question_id: "1",
-    content: "This is such a good question",
-    author: "Joe",
-  },
-  {
-    id: "4",
-    question_id: "1",
-    content: "This is such a good question",
-    author: "Random Author",
-  },
-  {
-    id: "5",
-    question_id: "1",
-    content: "This is such a good question",
-    author: "Another Random Author",
-  },
-  {
-    id: "6",
-    question_id: "1",
-    content: "This is such a good question",
-    author: "Yet Another Random Author",
-  },
-];
 
 export default function Comments({
   comments,
