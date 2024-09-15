@@ -2,6 +2,7 @@ import prisma from "~/lib/prisma";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { QuoteIcon } from "lucide-react";
 
 export const topicsRouter = createTRPCRouter({
   fetch_questions: publicProcedure
@@ -109,6 +110,27 @@ export const topicsRouter = createTRPCRouter({
             questions,
           };
         }
+      } else if (input.topic == "calculus") {
+        const questions = await prisma.question.findMany({
+          where: {
+            OR: [
+              {
+                AND: [
+                  { topic: "differential_calculus" },
+                  { content_level: input.subject },
+                ],
+              },
+              {
+                AND: [
+                  { topic: "integration" },
+                  { content_level: input.subject },
+                ],
+              },
+            ],
+          },
+        });
+
+        return { questions }
       }
 
       // return the normal page questions;
@@ -121,4 +143,41 @@ export const topicsRouter = createTRPCRouter({
         questions,
       };
     }),
+
+  fetch_sciences: publicProcedure
+    .input(z.object({ subject: z.string(), module: z.number() }))
+    .query(async ({ input }) => {
+      const questions = await prisma.sciQuestion.findMany({
+        where: {
+          AND: [{ subject: input.subject }, { module: input.module }],
+        },
+      });
+      return questions;
+    }),
+
+  random_question: publicProcedure
+    .input(z.object({ content_level: z.string(), topic: z.string().nullable() }))
+    .query(async ({ input }) => {
+      if (input.topic == null) {
+        const question = await prisma.question.findFirst({
+          where: {
+            content_level: input.content_level,
+          },
+        })
+
+        return { question }
+      } else {
+        const question = await prisma.question.findFirst({
+          where: {
+            content_level: input.content_level,
+            topic: input.topic
+          }
+        });
+        return { question }
+      }
+
+
+    })
+
+
 });

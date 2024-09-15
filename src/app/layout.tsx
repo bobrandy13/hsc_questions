@@ -1,10 +1,11 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
-
+import { Analytics } from "@vercel/analytics/react";
 import { TRPCReactProvider } from "~/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "~/components/theme-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Navbar from "~/components/navbar";
 
 const inter = Inter({
@@ -25,6 +26,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="icon" href="/logo.ico" sizes="any" />
+        </head>
         <body className={`font-sans ${inter.variable}`}>
           <TRPCReactProvider>
             <ThemeProvider
@@ -39,6 +43,8 @@ export default function RootLayout({
               </div>
             </ThemeProvider>
           </TRPCReactProvider>
+          <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </ClerkProvider>

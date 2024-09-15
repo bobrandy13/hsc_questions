@@ -1,4 +1,5 @@
 export const extension_2_maths_topics = [
+  "good questions",
   "Complex",
   "Proofs",
   "Calculus",
@@ -7,6 +8,7 @@ export const extension_2_maths_topics = [
 ];
 
 export const extension_1_maths_topics = [
+  "good questions",
   "Functions",
   "Trigonometry",
   "Vectors",
@@ -64,4 +66,28 @@ export const mathsTopics = [
   { topic: "Random Variables", level: "advanced" },
 ];
 
-export const subjects = ["4U", "3U", "2U"];
+export const physicsTopics = [
+  "Module 1: Kinematics",
+  "Module 2: Dynamics",
+  "Module 3: Waves and Thermodynamics",
+  "Module 4: Electric and Magnetic Fields",
+  "Module 5: Advanced Mechanics",
+  "Module 6: Electromagnetism",
+  "Module 7: The Nature of Light",
+  "Module 8: From the Universe to the Atom",
+];
+
+export const chemistryTopics = [
+  "Module 1: Properties and Structure of Matter",
+  "Module 2: Introduction to Quantitative Chemistry",
+  "Module 3: Reactive Chemistry",
+  "Module 4: Drivers of Reactions",
+  "Module 5: Equilibrium and Acid Reactions",
+  "Module 6: Acid/Base Reactions",
+  "Module 7: Organic Chemistry",
+  "Module 8: Applying Chemical Ideas",
+];
+
+export const levels = ["4U", "3U", "2U"];
+
+export const subjects = ["maths", "chem", "phys"];

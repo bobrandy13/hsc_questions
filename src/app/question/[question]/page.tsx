@@ -17,6 +17,7 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 import Comments from "~/components/Comments";
+import RandomQuestionButton from "~/components/randomQuestionButton";
 
 export default async function Question({
   params,
@@ -31,16 +32,22 @@ export default async function Question({
     id: params.question,
   });
 
+  console.log(question)
+
   if (!question) return <div>loading</div>;
   return (
     <div className="overflow-x-none flex h-full w-full flex-grow flex-row flex-wrap">
+      {'content_level' in question && (
+        <RandomQuestionButton content_level={question.content_level} />
+      )}
+
       <div className="w-full">
         <Card>
           <CardHeader>
             <CardTitle>{question.title}</CardTitle>
           </CardHeader>
           <CardContent>
-            <CardDescription>{question.topic}</CardDescription>
+            {/* <CardDescription>{question.topic}</CardDescription> */}
           </CardContent>
           <CardFooter className="flex w-full flex-col justify-center">
             <div className="relative flex w-full justify-center p-4 md:w-1/2">

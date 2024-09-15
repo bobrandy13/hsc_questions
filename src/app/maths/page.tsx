@@ -19,16 +19,16 @@ const topics = [
     subject_code: "2U",
     subject_description: "boring...",
   },
-  {
-    subject_name: "Ext 1 AT3",
-    subject_code: "EXT1AT3",
-    subject_description: ":((((",
-  },
-  {
-    subject_name: "Ext 2 AT3",
-    subject_code: "EXT2AT3",
-    subject_description: ":||||",
-  },
+  // {
+  //   subject_name: "Ext 1 AT3",
+  //   subject_code: "EXT1AT3",
+  //   subject_description: ":((((",
+  // },
+  // {
+  //   subject_name: "Ext 2 AT3",
+  //   subject_code: "EXT2AT3",
+  //   subject_description: ":||||",
+  // },
 ];
 export default function Maths() {
   return (

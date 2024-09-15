@@ -43,8 +43,11 @@ const bucket = cloudStorage.bucket("framingwebsite");
 export default async function submitForm(formData: FormData) {
   const question: File | null = formData.get("question_url") as unknown as File;
   const answer: File | null = formData.get("answer_url") as unknown as File;
+
+  console.log("submitting form");
+
   const title = formData.get("title") as string;
-  const subject = formData.get("subject") as string;
+  const level = formData.get("level") as string;
   const topic = formData.get("topic") as string;
   const name = formData.get("name") as string;
 
@@ -111,17 +114,40 @@ export default async function submitForm(formData: FormData) {
   //   })
   //   .end(answer_buffer);
 
-  return prisma.question.create({
-    data: {
-      title: title,
-      content_level: subject,
-      name: name,
-      createdAt: getCurrentTimeString(),
-      likes: 0,
-      dislikes: 0,
-      topic: topic,
-      question_url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
-      answer_url: `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`,
-    },
-  });
+  if (formData.get("subject") === "phys" || formData.get("subject") == "chem") {
+    const topicField = formData.get("module") as string;
+    const moduleMatch = topicField.match(/\d+/);
+    const m = moduleMatch ? parseInt(moduleMatch[0], 10) : null;
+
+    if (m === null) {
+      console.log("No module found");
+      return;
+    };
+
+    return prisma.sciQuestion.create({
+      data: {
+        title: title,
+        subject: formData.get("subject") as string,
+        module: m,
+        name: name,
+        createdAt: getCurrentTimeString(),
+        question_url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
+        answer_url: `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`,
+      }
+    });
+  } else {
+    return prisma.question.create({
+      data: {
+        title: title,
+        content_level: level,
+        name: name,
+        createdAt: getCurrentTimeString(),
+        likes: 0,
+        dislikes: 0,
+        topic: topic,
+        question_url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
+        answer_url: `https://storage.googleapis.com/${bucket.name}/${answer_blob.name}`,
+      },
+    });
+  }
 }

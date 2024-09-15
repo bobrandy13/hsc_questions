@@ -11,7 +11,6 @@ export default async function submitComment({
   author: string;
   createdAt: string;
 }) {
-  console.log(createdAt);
   try {
     const newComment = prisma.comment.create({
       data: {

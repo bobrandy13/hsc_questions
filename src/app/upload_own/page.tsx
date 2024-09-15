@@ -31,7 +31,7 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import submitForm from "~/server/submitForm";
-import { all_topics, subjects } from "~/server/topics";
+import { all_topics, chemistryTopics, levels, physicsTopics, subjects } from "~/server/topics";
 import { cn } from "~/lib/utils";
 import normaliseURL from "~/server/normaliseURL";
 
@@ -40,6 +40,7 @@ const formSchema = z.object({
     message: "Username must be at least 2 characters.",
   }),
   subject: z.string(),
+  level: z.string().optional(),
   topic: z.string().min(2, {
     message: "Topic must be at least 2 characters.",
   }),
@@ -61,20 +62,40 @@ export default function ProfileForm() {
   if (!isLoaded || !isSignedIn || !user) return <div>please sigin;</div>;
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    form.reset();
-    const formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("topic", normaliseURL(values.topic.toLowerCase()));
-    formData.append("question_url", values.question_url);
-    formData.append("answer_url", values.answer_url);
-    formData.append("subject", values.subject);
-    formData.append("name", user?.username ?? "random_name");
-    const response = await submitForm(formData);
+    console.log("submitting")
+    if (values.subject == "phys" || values.subject == "chem") {
+      console.log("submitting")
+      form.reset();
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("subject", values.subject);
+      formData.append("module", normaliseURL(values.topic.toLowerCase()));
+      formData.append("question_url", values.question_url);
+      formData.append("answer_url", values.answer_url);
+      formData.append("name", user?.username ?? "random_name");
+      const response = await submitForm(formData);
 
-    if (!response) {
-      alert("message not submitted");
+      if (!response) {
+        alert("message not submitted");
+      } else {
+        alert("file uploaded");
+      }
     } else {
-      alert("file uploaded");
+      form.reset();
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("topic", normaliseURL(values.topic.toLowerCase()));
+      formData.append("question_url", values.question_url);
+      formData.append("answer_url", values.answer_url);
+      formData.append("level", values.level ?? "random_level");
+      formData.append("name", user?.username ?? "random_name");
+      const response = await submitForm(formData);
+
+      if (!response) {
+        alert("message not submitted");
+      } else {
+        alert("file uploaded");
+      }
     }
   }
 
@@ -94,7 +115,7 @@ export default function ProfileForm() {
                 <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Question TItle"
+                    placeholder="Question Title"
                     {...field}
                     value={field.value ?? ""}
                   />
@@ -108,7 +129,7 @@ export default function ProfileForm() {
             name="subject"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Level</FormLabel>
+                <FormLabel>Subject</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -129,7 +150,7 @@ export default function ProfileForm() {
                   </PopoverTrigger>
                   <PopoverContent className="w-[200px] p-0">
                     <Command>
-                      <CommandInput placeholder="Search subject..." />
+                      <CommandInput placeholder="Search level..." />
                       <CommandEmpty>No subject found.</CommandEmpty>
                       <CommandGroup>
                         {subjects.map((value: string, key: number) => (
@@ -162,67 +183,141 @@ export default function ProfileForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="topic"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Topic</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "w-full justify-between",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        {field.value
-                          ? all_topics.find(
+          {form.watch("subject") === "maths" && (
+            <FormField
+              control={form.control}
+              name="level"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Level</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          {field.value
+                            ? levels.find((subject) => subject === field.value)
+                            : "Select level"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search level..." />
+                        <CommandEmpty>No subject found.</CommandEmpty>
+                        <CommandGroup>
+                          {levels.map((value: string, key: number) => (
+                            <CommandItem
+                              value={value}
+                              key={key}
+                              onSelect={() => {
+                                form.setValue("level", value);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0",
+                                )}
+                              />
+                              {value}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    This is the level that this question will be under.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
+
+          {(() => {
+            let topic = all_topics;
+            if (form.watch("subject") === "chem") {
+              topic = chemistryTopics;
+            } else if (form.watch("subject") === "phys") {
+              topic = physicsTopics;
+            }
+            return (< FormField
+              control={form.control}
+              name="topic"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Topic</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          {field.value
+                            ? topic.find(
                               (language) => language === field.value,
                             )
-                          : "Select topic"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
-                    <Command>
-                      <CommandInput placeholder="Search topic..." />
-                      <CommandEmpty>No topic found.</CommandEmpty>
-                      <CommandGroup>
-                        {all_topics.map((value: string, key: number) => (
-                          <CommandItem
-                            value={value}
-                            key={key}
-                            onSelect={() => {
-                              form.setValue("topic", value);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0",
-                              )}
-                            />
-                            {value}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>
-                  This is the topic that will be used in the dashboard.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                            : "Select topic"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search topic..." />
+                        <CommandEmpty>No topic found.</CommandEmpty>
+                        <CommandGroup>
+                          {
+                            topic.map((value: string, key: number) => (
+                              <CommandItem
+                                value={value}
+                                key={key}
+                                onSelect={() => {
+                                  form.setValue("topic", value);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                                {value}
+                              </CommandItem>
+                            ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    This is the topic that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            )
+          })()
+          }
 
           <FormField
             control={form.control}

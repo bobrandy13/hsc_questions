@@ -20,6 +20,7 @@ export const appRouter = createTRPCRouter({
   post_question: Question,
 
   commentRouter: commentRouter,
+
 });
 
 // export type definition of API

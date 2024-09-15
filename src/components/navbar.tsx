@@ -19,7 +19,6 @@ import Image from "next/image";
 
 export default function Navbar() {
   const { isLoaded, isSignedIn, user } = useUser();
-  console.log(user);
   const [open, setOpen] = useState(false);
   const [windowDimensions, setDimensions] = useState<{
     width: number;
@@ -54,6 +53,20 @@ export default function Navbar() {
               <span className="text-xl">Ctrl</span>;<p> to search</p>
             </kbd>
             <CommandMenu />
+          </NavigationMenuList>
+          <NavigationMenuList>
+            <Link href="/phys" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Physics
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuList>
+          <NavigationMenuList>
+            <Link href="/chem" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Chemistry
+              </NavigationMenuLink>
+            </Link>
           </NavigationMenuList>
           <NavigationMenuList>
             <Link href="/maths" legacyBehavior passHref>

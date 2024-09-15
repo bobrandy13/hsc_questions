@@ -27,14 +27,13 @@ function Question_collapsible({
   question: {
     id: string;
     title: string;
-    topic: string;
+    topic?: string;
     question_url: string;
     answer_url: string;
   };
 }) {
   const pathName = usePathname();
 
-  console.log(pathName);
   return (
     <div>
       <Card>

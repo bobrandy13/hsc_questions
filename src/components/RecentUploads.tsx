@@ -4,7 +4,6 @@ import Recent_upload_card from "./Recent_upload_card";
 
 export default async function RecentUploads() {
   const recentUploads = await getRecentUploads();
-  console.log(recentUploads);
   return (
     <div>
       <h5 className="mb-2 text-center text-2xl font-bold text-gray-900 dark:text-white">

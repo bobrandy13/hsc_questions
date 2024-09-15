@@ -25,6 +25,19 @@ model Question {
   Comment      Comment[]
 }
 
+model SciQuestion {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  subject       String
+  module        Int
+
+  name          String
+  createdAt     String
+
+  question_url String
+  answer_url   String
+}
+
 model Comment {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt  String

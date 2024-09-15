@@ -33,11 +33,22 @@ export const Question = createTRPCRouter({
         id: z.string(),
       }),
     )
-    .query(({ input }) => {
-      return prisma.question.findUnique({
+    .query(async ({ input }) => {
+      const question = await prisma.question.findUnique({
         where: {
           id: input.id,
         },
       });
+
+      if (question) return question;
+
+      const relatedQuestions = await prisma.sciQuestion.findUnique({
+        where: {
+          id:
+            input.id,
+        },
+      });
+
+      return relatedQuestions
     }),
 });
